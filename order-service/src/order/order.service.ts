@@ -23,7 +23,7 @@ export class OrderService {
   }
 
   update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
+	return this.orderModel.findOneAndUpdate({ _id: id }, updateOrderDto);
   }
 
   remove(id: number) {
