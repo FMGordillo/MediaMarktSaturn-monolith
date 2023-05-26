@@ -1,31 +1,31 @@
 import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
-import { OrdersService } from './orders.service';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { Client, ClientProxy } from '@nestjs/microservices';
+import { CreateOrderDto } from 'commons/dto/create-order.dto';
+import { UpdateOrderDto } from 'commons/dto/update-order.dto';
+import { MQ_CONFIGURATION_REGISTER, MQ_TOPICS } from 'config/constants';
 
 @Controller('orders')
 export class OrdersController {
-  constructor(private readonly ordersService: OrdersService) {}
+  @Client(MQ_CONFIGURATION_REGISTER.ORDERS as any)
+  client: ClientProxy;
 
   @Post()
   create(@Body() createOrderDto: CreateOrderDto) {
-    return this.ordersService.create(createOrderDto);
+    return this.client.send(MQ_TOPICS.CREATE_ORDER, createOrderDto);
   }
 
   @Get()
   findAll() {
-	console.log("shotting");
-	this.ordersService.sendInvoice();
-    return this.ordersService.findAll();
+    return this.client.send(MQ_TOPICS.LIST_ORDERS, {});
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.ordersService.findOne(+id);
+    return 'holi';
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.ordersService.update(+id, updateOrderDto);
+    return this.client.send(MQ_TOPICS.UPDATE_ORDER, { id, updateOrderDto });
   }
 }

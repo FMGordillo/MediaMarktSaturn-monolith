@@ -6,6 +6,12 @@ export const MQ_SERVICES = {
 } as const;
 
 export const MQ_TOPICS = {
+  CREATE_ORDER: 'order.create',
+  GET_ORDER: 'order.get',
+  LIST_ORDERS: 'order.list',
+  UPDATE_ORDER: 'order.update',
+
+  CREATE_INVOICE: 'invoice.update',
   SEND_INVOICE: 'invoice.send',
 } as const;
 
