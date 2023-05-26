@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/MediaMarktSaturn/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/MediaMarktSaturn/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/MediaMarktSaturn",
+  "projects": {
+    "MediaMarktSaturn": {
+      "type": "application",
+      "root": "apps/MediaMarktSaturn",
+      "entryFile": "main",
+      "sourceRoot": "apps/MediaMarktSaturn/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/MediaMarktSaturn/tsconfig.app.json"
+      }
+    },
+    "orders": {
+      "type": "application",
+      "root": "apps/orders",
+      "entryFile": "main",
+      "sourceRoot": "apps/orders/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/orders/tsconfig.app.json"
+      }
+    },
+    "invoices": {
+      "type": "application",
+      "root": "apps/invoices",
+      "entryFile": "main",
+      "sourceRoot": "apps/invoices/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/invoices/tsconfig.app.json"
+      }
+    }
+  }
+}
