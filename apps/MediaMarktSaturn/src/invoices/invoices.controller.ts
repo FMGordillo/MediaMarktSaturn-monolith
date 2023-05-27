@@ -1,5 +1,13 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Query,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { Client, ClientProxy } from '@nestjs/microservices';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { CreateInvoiceDto } from 'commons/dto/create-invoice.dto';
 import { MQ_CONFIGURATION_REGISTER, MQ_TOPICS } from 'config/constants';
 
@@ -9,13 +17,14 @@ export class InvoicesController {
   client: ClientProxy;
 
   @Post()
-  create(@Body() createInvoiceDto: CreateInvoiceDto) {
-    return this.client.send(MQ_TOPICS.CREATE_INVOICE, createInvoiceDto);
-  }
-
-  // TESTING ENDPOINT, REMOVE LATER
-  @Post('/send')
-  send(@Body() obj: { id: string }) {
-    return this.client.send(MQ_TOPICS.SEND_INVOICE, obj);
+  @UseInterceptors(FileInterceptor('file'))
+  create(@Query('orderId') orderId: string, @UploadedFile() file: any) {
+    if (!orderId) {
+      throw new Error('orderId is required in query');
+    }
+    return this.client.send(MQ_TOPICS.CREATE_INVOICE, {
+      orderId,
+      file: file.buffer.toString(),
+    });
   }
 }

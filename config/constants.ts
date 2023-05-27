@@ -1,4 +1,19 @@
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import mongoose from 'mongoose';
+import { GridFsStorage } from 'multer-gridfs-storage';
+
+export const MONGODB_URI = 'mongodb://root:root@localhost:27017/admin';
+
+export const INVOICE_BUCKET_FILES = 'invoice_files';
+
+export const STORAGE = new GridFsStorage({
+  url: MONGODB_URI,
+  file: (_req, file) => {
+    return { bucket: INVOICE_BUCKET_FILES, filename: file.originalname };
+  },
+});
+
+export const STORAGE_CLIENT = (db) => new mongoose.mongo.GridFSBucket(db);
 
 export const MQ_SERVICES = {
   ORDERS: 'ORDERS_SERVICE',
