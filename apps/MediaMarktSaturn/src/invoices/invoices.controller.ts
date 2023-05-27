@@ -13,6 +13,7 @@ export class InvoicesController {
     return this.client.send(MQ_TOPICS.CREATE_INVOICE, createInvoiceDto);
   }
 
+  // TESTING ENDPOINT, REMOVE LATER
   @Post('/send')
   send(@Body() obj: { id: string }) {
     return this.client.send(MQ_TOPICS.SEND_INVOICE, obj);

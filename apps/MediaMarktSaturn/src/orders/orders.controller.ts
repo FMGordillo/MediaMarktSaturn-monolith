@@ -21,11 +21,11 @@ export class OrdersController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return 'holi';
+    return this.client.send(MQ_TOPICS.GET_ORDER, { id });
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.client.send(MQ_TOPICS.UPDATE_ORDER, { id, updateOrderDto });
+  update(@Param('id') _id: string, @Body() updateOrderDto: UpdateOrderDto) {
+    return this.client.send(MQ_TOPICS.UPDATE_ORDER, { _id, updateOrderDto });
   }
 }

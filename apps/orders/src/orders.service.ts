@@ -10,19 +10,19 @@ export class OrdersService {
   constructor(@InjectModel(Order.name) private orderModel: Model<Order>) {}
 
   create(createOrderDto: CreateOrderDto) {
-	const createdOrder = new this.orderModel(createOrderDto);
-	return this.orderModel.create(createdOrder);
+    const createdOrder = new this.orderModel(createOrderDto);
+    return this.orderModel.create(createdOrder);
   }
 
   findAll() {
-	return this.orderModel.find();
+    return this.orderModel.find();
   }
 
-  findOne(id: string) {
-	return this.orderModel.findById(id);
+  find(id: string) {
+    return this.orderModel.findById(id);
   }
 
   update(id: string, updateOrderDto: UpdateOrderDto) {
-	return this.orderModel.findByIdAndUpdate(id, updateOrderDto, { new: true });
+    return this.orderModel.findByIdAndUpdate(id, updateOrderDto, { new: true });
   }
 }

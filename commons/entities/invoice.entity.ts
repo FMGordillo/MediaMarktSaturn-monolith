@@ -11,6 +11,9 @@ export class Invoice {
   orderId: string;
 
   @Prop()
+  file: string;
+
+  @Prop()
   timestamp: string;
 }
 

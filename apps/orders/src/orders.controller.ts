@@ -14,6 +14,11 @@ export class OrdersController {
     return this.orderService.create(data);
   }
 
+  @EventPattern(MQ_TOPICS.GET_ORDER)
+  find({ id }: { id: string }) {
+    return this.orderService.find(id);
+  }
+
   @EventPattern(MQ_TOPICS.LIST_ORDERS)
   findAll() {
     return this.orderService.findAll();
@@ -27,7 +32,6 @@ export class OrdersController {
     id: string;
     updateOrderDto: UpdateOrderDto;
   }) {
-	
     return this.orderService.update(id, updateOrderDto);
   }
 }
